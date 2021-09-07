@@ -35,7 +35,8 @@ public class DBHelper {
         return db.update("Pizza", cv,"id_pizza" + " = ?", new String[]{String.valueOf(md.getId())});
     }
 
-    public void deleteAll() {
+    public void deleteAll()
+    {
         db.delete("Pizza", null, null);
     }
 
@@ -66,9 +67,8 @@ public class DBHelper {
         }
         return arr;
     }
-    private class PizzaDBHelper extends SQLiteOpenHelper {
-
-
+    private class PizzaDBHelper extends SQLiteOpenHelper
+    {
         public PizzaDBHelper(@Nullable Context context) {
             super(context, DB_NAME, null, DB_VERSION);
         }

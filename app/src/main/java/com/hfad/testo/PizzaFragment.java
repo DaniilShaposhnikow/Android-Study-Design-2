@@ -1,10 +1,13 @@
 package com.hfad.testo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -70,8 +73,12 @@ public class PizzaFragment extends Fragment {
         return pizzaRecycler;
     }
 
+
     @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
     }
 }
