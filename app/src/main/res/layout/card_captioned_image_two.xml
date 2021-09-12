@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+    android:id="@+id/card_viewone"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp"
     android:layout_width="match_parent"
@@ -14,14 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageView
-            android:id="@+id/info_image"
+            android:id="@+id/info_imageone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"
             android:src="@drawable/spaghettibolognese"
             android:scaleType="centerCrop" />
         <TextView
-            android:id="@+id/info_text"
+            android:id="@+id/info_texttwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"

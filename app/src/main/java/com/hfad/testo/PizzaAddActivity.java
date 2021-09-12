@@ -1,13 +1,19 @@
 package com.hfad.testo;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Session2Command;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -64,28 +70,40 @@ public class PizzaAddActivity extends AppCompatActivity
                                 "com.hfad.testo.fileprovider",
                                 photoFile);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                        StartFoResult.launch(intent);
                     }
                 }
             }
         });
-
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            pht.setImageBitmap(imageBitmap);
-            uri = FileProvider.getUriForFile(this,
-                    "com.hfad.testo.fileprovider",
-                    photoFile);
-            revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            updatePhotoView();
+    ActivityResultLauncher<Intent> StartFoResult=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode()== Activity.RESULT_OK){
+                uri = FileProvider.getUriForFile(PizzaAddActivity.this,
+                        "com.hfad.testo.fileprovider",
+                        photoFile);
+                revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                updatePhotoView();
+            }
         }
-    }
+    });
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+////            Bundle extras = data.getExtras();
+////            Bitmap imageBitmap = (Bitmap) extras.get("data");
+////            pht.setImageBitmap(imageBitmap);
+//            uri = FileProvider.getUriForFile(this,
+//                    "com.hfad.testo.fileprovider",
+//                    photoFile);
+//            revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//            updatePhotoView();
+//        }
+//    }
 
     private void updatePhotoView() {
         if (photoFile == null || !photoFile.exists()) {

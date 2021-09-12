@@ -47,7 +47,7 @@ public class PizzaFragment extends Fragment {
 //            pizzaImages[i] = Pizza.pizzas[i].getImageResourceId();
 //        }
         db=new DBHelper(getActivity());
-        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(db.selectAll());
+        CaptionedImagesAdapter adapter = new CaptionedImagesAdapter(db.selectAll("Pizza"));
         rv=pizzaRecycler.findViewById(R.id.pizza_recycler);
         rv.setAdapter(adapter);
 //        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);

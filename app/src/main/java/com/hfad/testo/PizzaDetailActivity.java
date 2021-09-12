@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,17 +26,21 @@ public class PizzaDetailActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         dbHelper = new DBHelper(this);
         int pizzaId = (Integer)getIntent().getExtras().get(EXTRA_PIZZA_ID);
-        String pizzaName = dbHelper.select(pizzaId).getName();
+        String pizzaName = dbHelper.select(pizzaId, "Pizza").getName();
         TextView textView = (TextView)findViewById(R.id.pizza_text);
         textView.setText(pizzaName);
 
-        int pizzaImage = dbHelper.select(pizzaId).getImageResourceId();
+        Uri pizzaImage = dbHelper.select(pizzaId, "Pizza").getImageResourceId();
         ImageView imageView = (ImageView) findViewById(R.id.pizza_image);
-        imageView.setImageDrawable(ContextCompat.getDrawable(this, pizzaImage));
+//        imageView.setImageDrawable(ContextCompat.getDrawable(this, pizzaImage));
+        Bitmap bitmap = BitmapFactory.decodeFile(pizzaImage.getPath(),null);
+        imageView.setImageBitmap(bitmap);
         imageView.setContentDescription(pizzaName);
 
     }

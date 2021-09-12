@@ -1,7 +1,8 @@
 package com.hfad.testo;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 
 public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImagesAdapter.ViewHolder>
 {
-//    private String[] captions;
-//    private int[] imageIds;
     private ArrayList<Pizza> list;
     private Listener listener;
 
@@ -27,7 +26,8 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
         void onClick(int position);
     }
 
-    public CaptionedImagesAdapter(ArrayList<Pizza> l) {
+    public CaptionedImagesAdapter(ArrayList<Pizza> l)
+    {
        list=l;
     }
 
@@ -43,8 +43,10 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
     {
         CardView cardView = holder.cardView;
         ImageView imageView = (ImageView) cardView.findViewById(R.id.info_image);
-        Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), list.get(position).getImageResourceId());
-        imageView.setImageDrawable(drawable);
+       // Drawable drawable = ContextCompat.getDrawable(cardView.getContext(), list.get(position).getImageResourceId());
+        //imageView.setImageDrawable(drawable);
+        Bitmap bitmap = BitmapFactory.decodeFile(list.get(position).getImageResourceId().getPath(),null);
+        imageView.setImageBitmap(bitmap);
         imageView.setContentDescription(list.get(position).getName());
         TextView textView = (TextView) cardView.findViewById(R.id.info_text);
         textView.setText(list.get(position).getName());
@@ -61,13 +63,14 @@ public class CaptionedImagesAdapter extends RecyclerView.Adapter<CaptionedImages
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return list.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
-        private CardView cardView;
+        public CardView cardView;
         public ViewHolder(@NonNull CardView itemView) {
             super(itemView);
             cardView=itemView;
